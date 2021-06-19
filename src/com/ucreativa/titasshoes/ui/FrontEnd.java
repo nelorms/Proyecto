@@ -20,7 +20,7 @@ public class FrontEnd extends JFrame {
     private void construccionPantalla(){
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setSize(400,150);
-        super.setLayout(new GridLayout(3,2));
+        super.setLayout(new GridLayout(4,2));
     }
 
     private void agregarComponente(Component componente) { super.getContentPane().add(componente); }
@@ -30,6 +30,7 @@ public class FrontEnd extends JFrame {
         //Crear Labels
         JLabel lblNombre = new JLabel("Nombre");
         JLabel lblCedula = new JLabel("Cédula");
+        JLabel lblEdad = new JLabel("Edad");
         JLabel lblCodigo = new JLabel("Código");
         JLabel lblBodega = new JLabel("Bodega");
         JLabel lblEsvendedor = new JLabel("¿Es Vendedor?");
@@ -37,6 +38,7 @@ public class FrontEnd extends JFrame {
         //Crear Textos
         JTextField txtNombre = new JTextField();
         JTextField txtCedula = new JTextField();
+        JTextField txtEdad = new JTextField();
         JTextField txtCodigo = new JTextField();
         JTextField txtBodega = new JTextField();
         JCheckBox txtEsVendedor = new JCheckBox();
@@ -56,16 +58,22 @@ public class FrontEnd extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Planilla planilla = new Planilla(new FileRepository());
-                planilla.save(txtNombre.getText(),
+                try{
+                    planilla.save(txtNombre.getText(),
                         txtCedula.getText(),
+                        txtEdad.getText(),
                         txtCodigo.getText(),
                         txtBodega.getText());
+                    txtNombre.setText("");
+                    txtCedula.setText("");
+                    txtCodigo.setText("");
+                    txtBodega.setText("");
+                    txtEdad.setText("");
+                    JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), "Empleado creado con éxito");
+                } catch(ErrorEnEdadException ex) {
+                    JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+                }
 
-                txtNombre.setText("");
-                txtCedula.setText("");
-                txtCodigo.setText("");
-                txtBodega.setText("");
-                JOptionPane.showMessageDialog(((JButton) e.getSource()).getParent(), "Empleado creado con éxito");
             }
         });
         JButton imprimir = new JButton("Imprimir");
@@ -83,6 +91,8 @@ public class FrontEnd extends JFrame {
         this.agregarComponente(txtNombre);
         this.agregarComponente(lblCedula);
         this.agregarComponente(txtCedula);
+        this.agregarComponente(lblEdad);
+        this.agregarComponente(txtEdad);
         this.agregarComponente(lblEsvendedor);
         this.agregarComponente(txtEsVendedor);
         this.agregarComponente(lblCodigo);

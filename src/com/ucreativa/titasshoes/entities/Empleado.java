@@ -1,12 +1,14 @@
 package com.ucreativa.titasshoes.entities;
 
-public class Empleado {
+public abstract class Empleado {
     private String nombre;
     private String cedula;
+    private int edad;
 
-    public Empleado(String nombre, String cedula){
+    public Empleado(String nombre, String cedula, int edad) {
         this.nombre = nombre;
         this.cedula = cedula;
+        this.edad = edad;
     }
 
     public String getNombre() {
@@ -15,6 +17,12 @@ public class Empleado {
     public String getCedula() {
         return this.cedula;
     }
-    public void setNombre(String nombre){this.nombre = nombre;}
-    public void setCedula(String cedula){this.cedula = cedula;}
+    public int getEdad() {
+        return this.edad;
+    }
+    public void setNombre(String nombre) { this.nombre = nombre;}
+    public void setCedula(String cedula) { this.cedula = cedula;}
+    public void setEdad(int edad) { this.edad = edad;}
+
+
 }
